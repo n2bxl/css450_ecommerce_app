@@ -4,7 +4,7 @@ import csv
 from decimal import Decimal
 from pathlib import Path
 
-from model.menu_item import MenuItem
+from models.menu_item import MenuItem
 
 class MenuRepository:
     def __init__(self, file_path: Path | None = None):
