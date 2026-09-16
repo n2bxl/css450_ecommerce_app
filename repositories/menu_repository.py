@@ -7,11 +7,6 @@ from pathlib import Path
 from models.menu_item import MenuItem
 
 
-@staticmethod
-def _to_bool(value: str) -> bool:
-    return value.strip().lower() == "true"
-
-
 class MenuRepository:
     def __init__(self, file_path: Path | None = None):
         if file_path is None:
@@ -42,8 +37,12 @@ class MenuRepository:
                         description=row["description"],
                         base_price=Decimal(row["base_price"]),
                         available=self._to_bool(row["available"]),
-                        allows_milk=self._to_bool(row["allows-milk"]),
+                        allows_milk=self._to_bool(row["allows_milk"]),
                     )
                 )
 
         return items
+
+    @staticmethod
+    def _to_bool(value: str) -> bool:
+        return value.strip().lower() == "true"
