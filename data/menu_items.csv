@@ -1,0 +1,6 @@
+item_id,name,category,description,base_price,available,allows_milk
+1,Caffe Latte,Espresso,Espresso with steamed milk,4.25,true,true
+2,Caffe Americano,Espresso,Espresso with hot water,3.25,true,false
+3,Cold Brew,Cold Coffee,Smooth cold-steeped coffee served over ice,3.75,true,true
+4,Chai Tea Latte,Tea,Spiced chai tea with steamed milk,4.50,true,true
+5,Hot Chocolate,Other,Steamed milk with chocolate sauce,3.95,false,true

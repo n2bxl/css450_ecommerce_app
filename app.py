@@ -18,6 +18,7 @@ st.title("Phoenix Coffee Co.")
 st.subheader("Menu")
 
 menu_items = menu_service.get_available_menu()
+st.write(f"Loaded {len(menu_items)} menu items")
 
 for item in menu_items:
     st.markdown(f"### {item.name}")

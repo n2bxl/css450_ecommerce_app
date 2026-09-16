@@ -6,6 +6,12 @@ from pathlib import Path
 
 from models.menu_item import MenuItem
 
+
+@staticmethod
+def _to_bool(value: str) -> bool:
+    return value.strip().lower() == "true"
+
+
 class MenuRepository:
     def __init__(self, file_path: Path | None = None):
         if file_path is None:
@@ -41,8 +47,3 @@ class MenuRepository:
                 )
 
         return items
-
-
-@staticmethod
-def _to_bool(value: str) -> bool:
-    return value.strip().lower() == "true"
