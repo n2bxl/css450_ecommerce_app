@@ -4,3 +4,6 @@ item_id,name,category,description,base_price,available,allows_milk
 3,Cold Brew,Coffee,Smooth cold-steeped coffee served over ice,3.75,true,true
 4,Chai Tea Latte,Tea,Spiced chai tea with steamed milk,4.50,true,true
 5,Hot Chocolate,Other,Steamed milk with chocolate sauce,3.95,false,true
+6,Drip,Coffee,Served hot and fresh off the brewer,2.95,true,true
+7,Mocha,Espresso,Espresso + chocolate + milk,4.75,true,true
+8,Black Loose Leaf,Tea,Our special blend of aged black tea,3.75,true,true
