@@ -37,6 +37,17 @@ def clear_configured_item():
     st.session_state.configured_item = None
 
 
+def render_menu_item(item, key_prefix: str):
+    if st.button(
+        f"{item.name} • Starting at ${item.base_price:.2f}",
+        key=f"{key_prefix}_{item.item_id}",
+    ):
+        st.session_state.selected_item_id = item.item_id
+        st.rerun()
+
+    st.write(item.description)
+
+
 customization_service = CustomizationService()
 
 
@@ -147,17 +158,6 @@ if st.session_state.selected_item_id is not None:
 
 st.subheader("What can we get started for you?")
 st.write("Browse the menu by category or choose from one of our popular drinks.")
-
-
-def render_menu_item(item, key_prefix: str):
-    if st.button(
-        f"{item.name} • Starting at ${item.base_price:.2f}",
-        key=f"{key_prefix}_{item.item_id}",
-    ):
-        st.session_state.selected_item_id = item.item_id
-        st.rerun()
-
-    st.write(item.description)
 
 
 st.markdown("### Browse by category")

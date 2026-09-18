@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from models.menu_item import MenuItem
 
+
 class CustomizationService:
     SIZE_ADJUSTMENTS = {
         "Small": Decimal("0.00"),
@@ -12,8 +13,8 @@ class CustomizationService:
     }
 
     def calculate_price(
-            self,
-            item: MenuItem,
-            size: str,
+        self,
+        item: MenuItem,
+        size: str,
     ) -> Decimal:
         return item.base_price + self.SIZE_ADJUSTMENTS[size]
