@@ -7,6 +7,12 @@ from services.customization_service import CustomizationService
 from services.menu_service import MenuService
 
 
+st.set_page_config(
+    page_title="Phoenix Coffee Co.",
+    page_icon="☕️",
+)
+
+
 if "selected_item_id" not in st.session_state:
     st.session_state.selected_item_id = None
 
@@ -19,28 +25,30 @@ if "selected_milk" not in st.session_state:
 if "configured_item" not in st.session_state:
     st.session_state.configured_item = None
 
+
 def reset_customization():
     st.session_state.selected_item_id = None
     st.session_state.selected_size = None
     st.session_state.selected_milk = None
     st.session_state.configured_item = None
 
+
 def clear_configured_item():
     st.session_state.configured_item = None
 
+
 customization_service = CustomizationService()
 
-st.set_page_config(
-    page_title="Phoenix Coffee Co.",
-    page_icon="☕️",
-)
 
 repository = MenuRepository()
 menu_service = MenuService(repository)
 
+
 st.title("Phoenix Coffee Co.")
 
+
 menu_items = menu_service.get_available_menu()
+
 
 if st.session_state.selected_item_id is not None:
     selected_item = next(
@@ -57,9 +65,13 @@ if st.session_state.selected_item_id is not None:
         st.write(selected_item.description)
         st.write(f"Starting at **${selected_item.base_price:.2f}**")
 
+        size_options = list(
+            customization_service.SIZE_ADJUSTMENTS.keys()
+        )
+
         size = st.radio(
             "Choose a size*",
-            ["Small", "Medium", "Large"],
+            size_options,
             index=None,
             key="selected_size",
             on_change=clear_configured_item,
@@ -132,8 +144,10 @@ if st.session_state.selected_item_id is not None:
 
         st.stop()
 
+
 st.subheader("What can we get started for you?")
 st.write("Browse the menu by category or choose from one of our popular drinks.")
+
 
 def render_menu_item(item, key_prefix: str):
     if st.button(
@@ -145,7 +159,9 @@ def render_menu_item(item, key_prefix: str):
 
     st.write(item.description)
 
+
 st.markdown("### Browse by category")
+
 
 coffee_tab, espresso_tab, tea_tab = st.tabs(
     ["Coffee", "Espresso", "Tea"]
@@ -166,10 +182,13 @@ with tea_tab:
         if item.category == "Tea":
             render_menu_item(item, "tea")
 
+
 st.divider()
+
 
 st.subheader("Popular Drinks")
 st.write("Pick from a few customer favorites.")
+
 
 for item in menu_items:
     render_menu_item(item, "popular")
