@@ -7,3 +7,4 @@ item_id,name,category,description,base_price,available,allows_milk
 6,Drip,Coffee,Served hot and fresh off the brewer,2.95,true,true
 7,Mocha,Espresso,Espresso + chocolate + milk,4.75,true,true
 8,Black Loose Leaf,Tea,Our special blend of aged black tea,3.75,true,true
+9,Black Tea Lemonade,Tea,Black tea with bright and tart citrusy lemonade,4.25,true,false
