@@ -1,8 +1,12 @@
 # app.py
 
+from decimal import Decimal
+
 import streamlit as st
 
+from models.cart_items import CartItem
 from repositories.menu_repository import MenuRepository
+from services.cart_service import CartService
 from services.customization_service import CustomizationService
 from services.menu_service import MenuService
 
@@ -11,6 +15,34 @@ st.set_page_config(
     page_title="Phoenix Coffee Co.",
     page_icon="☕️",
 )
+
+
+# --- TEMPORARY DEVELOPMENT CART SEED ---
+if "cart" not in st.session_state:
+    st.session_state.cart = [
+        CartItem(
+            item_id=1,
+            name="Caffe Latte",
+            size="Large",
+            milk="Oatmilk",
+            unit_price=Decimal("5.25"),
+            quantity=1,
+        ),
+        CartItem(
+            item_id=2,
+            name="Cold Brew",
+            size="Medium",
+            milk=None,
+            unit_price=Decimal("4.50"),
+            quantity=1,
+        )
+    ]
+
+if "current_view" not in st.session_state:
+    st.session_state.current_view = "cart"
+
+DEMO_TAX_RATE = Decimal("0.10")
+# ---------------------------------------
 
 
 if "selected_item_id" not in st.session_state:
@@ -48,6 +80,85 @@ def render_menu_item(item, key_prefix: str):
     st.write(item.description)
 
 
+def render_cart():
+    st.subheader("Your Order")
+
+    cart = st.session_state.cart
+
+    if not cart:
+        st.info("Your order is empty.")
+        return
+
+    for index, item in enumerate(cart):
+        st.markdown(f"### {item.name}")
+        st.write(f"Size: {item.size}")
+        if item.milk is not None:
+            st.write(f"Milk: {item.milk}")
+
+        item_total = cart_service.calculate_item_total(item)
+
+        st.write(
+            f"\\${item.unit_price:.2f} each • "
+            f"**\\${item_total:.2f}**"
+        )
+
+        decrease_col, quantity_col, increase_col, remove_col = st.columns(
+            [1, 1, 1, 2]
+        )
+
+        with decrease_col:
+            if st.button(
+                "-",
+                key=f"decrease_{index}",
+            ):
+                cart_service.decrease_quantity(item)
+                st.rerun()
+
+        with quantity_col:
+            st.write(f"Qty: **{item.quantity}**")
+
+        with increase_col:
+            if st.button(
+                "+",
+                key=f"increase_{index}",
+            ):
+                cart_service.increase_quantity(item)
+                st.rerun()
+
+        with remove_col:
+            if st.button(
+                "Remove",
+                key=f"remove_{index}",
+            ):
+                cart_service.remove_item(cart, item)
+                st.rerun()
+
+        st.divider()
+
+    subtotal = cart_service.calculate_subtotal(cart)
+    tax = cart_service.calculate_tax(
+        cart,
+        DEMO_TAX_RATE,
+    )
+    total = cart_service.calculate_total(
+        cart,
+        DEMO_TAX_RATE,
+    )
+
+    st.write(f"Subtotal: **\\${subtotal:.2f}**")
+    st.write(f"Tax: **\\${tax:.2f}**")
+    st.write(f"### Total: \\${total:.2f}")
+
+    st.button(
+        "Place order",
+        type="primary",
+    )
+
+
+customization_service = CustomizationService()
+
+
+cart_service = CartService()
 customization_service = CustomizationService()
 
 
@@ -56,6 +167,11 @@ menu_service = MenuService(repository)
 
 
 st.title("Phoenix Coffee Co.")
+
+
+if st.session_state.current_view == "cart":
+    render_cart()
+    st.stop()
 
 
 menu_items = menu_service.get_available_menu()
