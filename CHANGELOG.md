@@ -2,6 +2,23 @@
 
 All notable development changes to the CSS/450 e-commerce capstone project are documented here.
 
+## 2026-09-22
+
+### Added
+- Added `CartItem` model for configured order items.
+- Added `CartService` for quantity changes, item removal, subtotal, tax, and total calculations.
+- Added cart review interface using Streamlit session state.
+- Added temporary seeded cart data for isolated cart development.
+- Expanded automated test suite to 23 tests.
+
+### Changed
+- Added size and applicable milk details to order review.
+- Added configurable tax-rate input to cart calculations.
+
+### Tested
+- Verified all 23 automated tests pass on macOS with Python 3.14.6.
+- Completed cart smoke testing for quantity changes, removal, recalculation, and empty-cart behavior.
+
 ## 2026-09-19
 
 ### Added

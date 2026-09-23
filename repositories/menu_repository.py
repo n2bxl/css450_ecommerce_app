@@ -83,7 +83,7 @@ class MenuRepository:
             return False
 
         raise ValueError(
-            f"Invalid boolena value: {value!r}. "
+            f"Invalid boolean value: {value!r}. "
             "Expected 'true' or 'false'."
         )
 
@@ -106,7 +106,7 @@ class MenuRepository:
         return price
 
     @staticmethod
-    def _require_text(value:str, field_name: str) -> str:
+    def _require_text(value: str, field_name: str) -> str:
         normalized_value = value.strip()
 
         if not normalized_value:

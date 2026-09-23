@@ -4,7 +4,7 @@ from decimal import Decimal
 
 import streamlit as st
 
-from models.cart_items import CartItem
+from models.cart_item import CartItem
 from repositories.menu_repository import MenuRepository
 from services.cart_service import CartService
 from services.customization_service import CustomizationService
@@ -153,9 +153,6 @@ def render_cart():
         "Place order",
         type="primary",
     )
-
-
-customization_service = CustomizationService()
 
 
 cart_service = CartService()

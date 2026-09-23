@@ -2,7 +2,7 @@
 
 from decimal import Decimal, ROUND_HALF_UP
 
-from models.cart_items import CartItem
+from models.cart_item import CartItem
 
 class CartService:
     def calculate_item_total(

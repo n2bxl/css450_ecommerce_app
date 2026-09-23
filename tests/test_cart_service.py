@@ -4,7 +4,7 @@ from decimal import Decimal
 
 import pytest
 
-from models.cart_items import CartItem
+from models.cart_item import CartItem
 from services.cart_service import CartService
 
 
