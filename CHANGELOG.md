@@ -2,6 +2,28 @@
 
 All notable development changes to the CSS/450 e-commerce capstone project are documented here.
 
+## 2026-09-24
+
+### Added
+- Added `CartService.add_item()` to support adding configured beverages to the active order.
+- Added `Order` model for submitted-order data, including order number, items, subtotal, tax, total, and status.
+- Added `OrderService` for validating and submitting completed orders.
+- Added order confirmation view with preserved beverage details, totals, order number, and received status.
+- Added navigation for continuing shopping and starting a new order.
+- Expanded the automated test suite to 27 tests.
+
+### Changed
+- Replaced temporary seeded cart data with an empty production cart initialized through Streamlit session state.
+- Connected the beverage customization flow to `CartItem` and the active cart.
+- Preserved selected beverage size, applicable milk customization, quantity, and price through cart review and order submission.
+- Connected the cart's Place order action to the order-submission workflow.
+- Cleared the active cart after submission while preserving submitted-order data for confirmation.
+
+### Tested
+- Verified all 27 automated tests pass on macOS with Python 3.14.6.
+- Completed an end-to-end smoke test covering menu browsing, beverage customization, cart addition, continued shopping, quantity adjustment, item removal, order submission, confirmation, and starting a new order.
+- Verified multiple configured beverages persist correctly in the cart and that non-applicable milk details are omitted.
+
 ## 2026-09-22
 
 ### Added
