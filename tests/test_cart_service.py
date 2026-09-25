@@ -157,3 +157,13 @@ def test_rejects_invalid_tax_rate():
             cart,
             Decimal("1.01"),
         )
+
+
+def test_add_item():
+    service = CartService()
+    item = make_cart_item()
+    cart = []
+
+    service.add_item(cart, item)
+
+    assert cart == [item]

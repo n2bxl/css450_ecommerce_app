@@ -1,4 +1,4 @@
-# models/cart_items.py
+# models/cart_item.py
 
 from dataclasses import dataclass
 from decimal import Decimal

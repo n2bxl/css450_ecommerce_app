@@ -67,3 +67,11 @@ class CartService:
             item: CartItem,
     ) -> None:
         cart.remove(item)
+
+
+    def add_item(
+            self,
+            cart: list[CartItem],
+            item: CartItem
+    ) -> None:
+        cart.append(item)
