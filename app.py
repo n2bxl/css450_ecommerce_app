@@ -5,7 +5,6 @@ from decimal import Decimal
 import streamlit as st
 
 from models.cart_item import CartItem
-from models.order import Order
 
 from repositories.menu_repository import MenuRepository
 
@@ -21,41 +20,13 @@ st.set_page_config(
 )
 
 
-# --- TEMPORARY DEVELOPMENT CART SEED ---
-#if "cart" not in st.session_state:
-#    st.session_state.cart = [
-#        CartItem(
-#            item_id=1,
-#            name="Caffe Latte",
-#            size="Large",
-#            milk="Oatmilk",
-#            unit_price=Decimal("5.25"),
-#            quantity=1,
-#        ),
-#        CartItem(
-#            item_id=2,
-#            name="Cold Brew",
-#            size="Medium",
-#            milk=None,
-#            unit_price=Decimal("4.50"),
-#            quantity=1,
-#        )
-#    ]
-#
-#if "current_view" not in st.session_state:
-#    st.session_state.current_view = "cart"
-#
-#DEMO_TAX_RATE = Decimal("0.10")
-# ---------------------------------------
-
-
 if "cart" not in st.session_state:
     st.session_state.cart = []
 
 if "current_view" not in st.session_state:
     st.session_state.current_view = "menu"
 
-DEMO_TAX_RATE = Decimal("0.10")
+ORDER_TAX_RATE = Decimal("0.10")
 
 
 if "selected_item_id" not in st.session_state:
@@ -120,7 +91,7 @@ def submit_current_order():
 
     order = order_service.submit_order(
         st.session_state.cart,
-        DEMO_TAX_RATE,
+        ORDER_TAX_RATE,
     )
 
     st.session_state.submitted_order = order
@@ -174,47 +145,34 @@ def render_cart():
             f"**\\${item_total:.2f}**"
         )
 
-        decrease_col, quantity_col, increase_col, remove_col = st.columns(
-            [1, 1, 1, 2]
+        quantity = st.number_input(
+            "Quantity",
+            min_value=1,
+            step=1,
+            value=item.quantity,
+            key=f"quantity_{item.line_id}",
         )
 
-        with decrease_col:
-            if st.button(
-                "-",
-                key=f"decrease_{index}",
-            ):
-                cart_service.decrease_quantity(item)
-                st.rerun()
+        if quantity != item.quantity:
+            item.quantity = quantity
 
-        with quantity_col:
-            st.write(f"Qty: **{item.quantity}**")
-
-        with increase_col:
-            if st.button(
-                "+",
-                key=f"increase_{index}",
-            ):
-                cart_service.increase_quantity(item)
-                st.rerun()
-
-        with remove_col:
-            if st.button(
-                "Remove",
-                key=f"remove_{index}",
-            ):
-                cart_service.remove_item(cart, item)
-                st.rerun()
+        if st.button(
+            "Remove",
+            key=f"remove_{item.line_id}",
+        ):
+            cart_service.remove_item(cart, item)
+            st.rerun()
 
         st.divider()
 
     subtotal = cart_service.calculate_subtotal(cart)
     tax = cart_service.calculate_tax(
         cart,
-        DEMO_TAX_RATE,
+        ORDER_TAX_RATE,
     )
     total = cart_service.calculate_total(
         cart,
-        DEMO_TAX_RATE,
+        ORDER_TAX_RATE,
     )
 
     st.write(f"Subtotal: **\\${subtotal:.2f}**")

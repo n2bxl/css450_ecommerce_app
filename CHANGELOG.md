@@ -2,6 +2,22 @@
 
 All notable development changes to the CSS/450 e-commerce capstone project are documented here.
 
+## 2026-09-26
+
+### Changed
+- Removed obsolete temporary cart-seed development code from `app.py`.
+- Removed an unused `Order` import.
+- Renamed the demo tax-rate constant to `ORDER_TAX_RATE` for clearer production-oriented naming.
+- Added stable cart-line identifiers to `CartItem` for UI state management.
+- Replaced the four-column cart quantity controls with a more mobile-friendly quantity input and remove action.
+- Improved cart behavior on narrow mobile displays while preserving the existing cart service logic.
+
+### Tested
+- Verified all 27 automated tests pass after the cleanup and cart UX changes.
+- Completed desktop acceptance testing of the full customer journey.
+- Completed mobile smoke testing of menu navigation, customization, cart quantity adjustment, removal, order submission, and confirmation.
+- Verified cart totals and order data remain correct after quantity changes and item removal.
+
 ## 2026-09-24
 
 ### Added
