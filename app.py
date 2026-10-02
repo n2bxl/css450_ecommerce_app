@@ -123,7 +123,7 @@ def render_cart():
     cart = st.session_state.cart
 
     if not cart:
-        st.info("Your order is empty.")
+        st.info("Your order is empty. Add at least one item before placing an order.")
 
         st.button(
             "← Continue shopping",
@@ -138,13 +138,8 @@ def render_cart():
         if item.milk is not None:
             st.write(f"Milk: {item.milk}")
 
-        item_total = cart_service.calculate_item_total(item)
-
-        st.write(
-            f"\\${item.unit_price:.2f} each • "
-            f"**\\${item_total:.2f}**"
-        )
-
+        # Keep the price above the input, but fill it after updating quantity.
+        price_line = st.empty()
         quantity = st.number_input(
             "Quantity",
             min_value=1,
@@ -155,6 +150,12 @@ def render_cart():
 
         if quantity != item.quantity:
             item.quantity = quantity
+
+        item_total = cart_service.calculate_item_total(item)
+        price_line.write(
+            f"\\${item.unit_price:.2f} each • "
+            f"**\\${item_total:.2f}**"
+        )
 
         if st.button(
             "Remove",

@@ -2,6 +2,21 @@
 
 All notable development changes to the CSS/450 e-commerce capstone project are documented here.
 
+## Unreleased | Week Four review, 2026-10-01
+
+### Fixed
+- Apply the quantity input before displaying each cart line amount so it agrees with the current quantity and order totals.
+- Explicitly tell customers to add at least one item before placing an empty order.
+
+### Tested
+- Added two Streamlit UI regression tests covering repeated quantity changes, displayed monetary amounts, confirmation data, removal, and the empty-cart instruction.
+- Verified all 29 automated tests pass with the proposed changes.
+- Confirmed both new regression tests fail against the original `49ca81d` build.
+- Mobile retesting of the proposed changes remains pending.
+
+### Known limitations
+- Submitted orders remain in Streamlit session state. Durable storage and shop retrieval are not implemented, so TC-04's recorded-order acceptance criterion remains unmet and is documented for this submission.
+
 ## 2026-09-26
 
 ### Changed
